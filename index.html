@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> PokeDex </title> 
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1> Welcome to my PokeDex! </h1> 
+        <div id="wrapper">
+            <div id="image-content">
+
+            </div>
+        </div>
+        <div id="pokedex-content">
+
+        </div>
+
+        <!-- jQuery GoogleAPI --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- jQuery Code -->
+        <script>
+            $(document).ready(function() {
+                
+                for (var i = 0; i <= 151; i++) {
+                    $('#image-content').append(`<img id=${i} src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png">`);
+                    console.log(i);
+                };
+
+                $(document).on('click', 'img', function() {
+                    var value = $(this).attr('id');
+
+                    $.getJSON("https://pokeapi.co/api/v2/pokemon/" + value + "/", function(poke) {
+                        var html_str = "";
+                        html_str += "<h1>" + poke.name + "</h1>";
+                        html_str += '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + value + '.png">';
+                        html_str += "<h2> Types </h2>";
+                        html_str += "<ol>";
+                        
+                        for (var k = 0; k < poke.types.length; k++) {
+                            html_str += "<li>" + poke['types'][1][1] + "</li>";
+                        }
+                        html_str += "</ol>";
+                        html_str += "<p>" + poke.height + "</p>";
+                        html_str += "<p>" + poke.weight + "</p>";
+
+
+
+                        $("#pokedex-content").append(html_str);
+                    })
+
+                    
+
+
+
+                });
+
+
+
+
+
+            });
+        </script>
+    </body>
+</html>
